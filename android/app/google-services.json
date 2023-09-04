@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810184464957",
+    "project_id": "roam-mate",
+    "storage_bucket": "roam-mate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810184464957:android:d290ca743a79d827df2854",
+        "android_client_info": {
+          "package_name": "com.example.roam_mate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810184464957-6n2lmoaqib60geo93hk0st0fim8f6egq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0BTa9-j--bJx4mohMfMrYuDoaz_8LX6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810184464957-6n2lmoaqib60geo93hk0st0fim8f6egq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>810184464957-l4g6me425jhcqd3e7rj6bg199b3o801j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.810184464957-l4g6me425jhcqd3e7rj6bg199b3o801j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCDx-KNT_y3k2FeQ8jwitDOF_VPGoYvqRM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>810184464957</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.roamMate</string>
+	<key>PROJECT_ID</key>
+	<string>roam-mate</string>
+	<key>STORAGE_BUCKET</key>
+	<string>roam-mate.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:810184464957:ios:ada91a9b7b27efb6df2854</string>
+</dict>
+</plist>
