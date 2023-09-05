@@ -8,6 +8,10 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  // BELOW IS DEV ONLY CODE. DO NOT COMMIT.
+
+  await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+
   runApp(const MyApp());
 }
 
@@ -131,6 +135,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+enum AuthPageType { login, signup }
+
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({super.key});
 
@@ -139,6 +145,8 @@ class AuthenticationPage extends StatefulWidget {
 }
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
+  AuthPageType currentAuthPageType = AuthPageType.signup;
+
   final _authenticationFormKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -148,6 +156,16 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void togglePageType() {
+    setState(() {
+      if (currentAuthPageType == AuthPageType.signup) {
+        currentAuthPageType = AuthPageType.login;
+      } else {
+        currentAuthPageType = AuthPageType.signup;
+      }
+    });
   }
 
   Future<void> signUp() async {
@@ -182,7 +200,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             controller: _emailController,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Enter your email',
+              labelText: 'Email',
             ),
           ),
           TextFormField(
@@ -190,14 +208,23 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             obscureText: true,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Choose a password',
+              labelText: 'Password',
             ),
           ),
           ElevatedButton(
               onPressed: () {
                 signUp();
               },
-              child: const Text('Sign Up')),
+              child: Text((currentAuthPageType == AuthPageType.login)
+                  ? "Sign in"
+                  : "Sign Up")),
+          TextButton(
+              onPressed: () {
+                togglePageType();
+              },
+              child: Text(currentAuthPageType == AuthPageType.login
+                  ? "Don't already have an account"
+                  : "Already have an account?"))
         ],
       ),
     ));
