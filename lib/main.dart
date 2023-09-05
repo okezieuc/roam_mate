@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final Future<FirebaseApp> _fbApp =
-      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -37,19 +38,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: FutureBuilder(
-            future: _fbApp,
-            builder: ((context, snapshot) {
-              if (snapshot.hasError) {
-                return const Text("There was an error");
-              } else if (snapshot.hasData) {
-                return const MyHomePage(title: 'Flutter Demo Home Page');
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            })));
+        home: const MyHomePage(title: 'Flutter Demo Home Page'));
   }
 }
 
@@ -129,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const AuthenticationPage(),
           ],
         ),
       ),
@@ -138,5 +128,78 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class AuthenticationPage extends StatefulWidget {
+  const AuthenticationPage({super.key});
+
+  @override
+  State<AuthenticationPage> createState() => _AuthenticationPageState();
+}
+
+class _AuthenticationPageState extends State<AuthenticationPage> {
+  final _authenticationFormKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> signUp() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    if (!context.mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Account Created Successfully')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Form(
+      key: _authenticationFormKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Enter your email',
+            ),
+          ),
+          TextFormField(
+            controller: _passwordController,
+            obscureText: true,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Choose a password',
+            ),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                signUp();
+              },
+              child: const Text('Sign Up')),
+        ],
+      ),
+    ));
   }
 }
