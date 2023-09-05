@@ -50,8 +50,19 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     }
 
     if (!context.mounted) return;
-
     showSnackBar(context, 'Account Created Successfully');
+  }
+
+  Future<void> logIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+    } catch (e) {
+      print(e);
+    }
+
+    if (!context.mounted) return;
+    showSnackBar(context, 'Logged in successfully');
   }
 
   @override
@@ -78,7 +89,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           ),
           ElevatedButton(
               onPressed: () {
-                signUp();
+                if (currentAuthPageType == AuthPageType.login) {
+                  logIn();
+                } else {
+                  signUp();
+                }
               },
               child: Text((currentAuthPageType == AuthPageType.login)
                   ? "Sign in"
