@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:roam_mate/utils/show_snackbar.dart';
 
 enum AuthPageType { login, signup }
 
@@ -50,9 +51,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
     if (!context.mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Account Created Successfully')),
-    );
+    showSnackBar(context, 'Account Created Successfully');
   }
 
   @override
