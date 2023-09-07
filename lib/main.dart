@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:roam_mate/screens/onboarding/completed_onboarding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
-
-// uncomment the line below when using authentication emulator locally
-// import 'package:firebase_auth/firebase_auth.dart';
 
 import 'screens/onboarding/authentication_page.dart';
 
@@ -43,6 +42,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var loggedIn = (FirebaseAuth.instance.currentUser == null);
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        setState(() {
+          loggedIn = false;
+        });
+      } else {
+        setState(() {
+          loggedIn = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            AuthenticationPage(),
+            loggedIn ? const CompletedOnboarding() : const AuthenticationPage(),
           ],
         ),
       ),
