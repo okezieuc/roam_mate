@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:roam_mate/screens/onboarding/completed_onboarding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,11 +17,18 @@ class _AppState extends State<App> {
   late bool completedOnboarding;
   bool loadingOnboardingStatusData = true;
 
+  void toggleCompletedOnboarding() {
+    setState(() {
+      completedOnboarding = !completedOnboarding;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
-    final userData = db.collection("users").doc("SAMPLE");
+    final userData =
+        db.collection("users").doc(FirebaseAuth.instance.currentUser!.uid);
     userData.get().then(
       (DocumentSnapshot doc) {
         var userData = doc.data();
@@ -49,6 +57,6 @@ class _AppState extends State<App> {
       return const CompletedOnboarding();
     }
 
-    return OnboardingPage();
+    return OnboardingPage(toggleCompletedOnboarding: toggleCompletedOnboarding);
   }
 }
