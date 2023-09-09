@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:roam_mate/screens/onboarding/completed_onboarding.dart';
+import 'package:roam_mate/screens/app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
@@ -11,8 +11,9 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // uncomment the line below when using authentication emulator locally
+  // uncomment the line below when using authentication and firestore emulator locally
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  // FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
 
   runApp(const MyApp());
 }
@@ -72,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            loggedIn ? const CompletedOnboarding() : const AuthenticationPage(),
+            loggedIn ? const App() : const AuthenticationPage(),
           ],
         ),
       ),
