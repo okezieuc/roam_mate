@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:roam_mate/utils/profile_controller.dart';
 import 'package:roam_mate/widgets/user_search/user_profile.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -15,15 +16,14 @@ class _UserSearchState extends State<UserSearch> {
   LoadingFriendsDataStatus loadingFriendsDataStatus =
       LoadingFriendsDataStatus.loading;
 
-  late Map<String, dynamic> friend;
+  late Profile returnedUserProfile;
 
   @override
   void initState() {
     super.initState();
 
     // load the data for the selected user
-    db
-        .collection("users")
+    profileController
         .where("username",
             isEqualTo:
                 "janedoe") // replace "janedoe" with data from an input source
@@ -35,7 +35,7 @@ class _UserSearchState extends State<UserSearch> {
         if (querySnapshot.docs.isEmpty) {
           loadingFriendsDataStatus = LoadingFriendsDataStatus.noData;
         } else {
-          friend = querySnapshot.docs[0].data();
+          returnedUserProfile = querySnapshot.docs[0].data();
           loadingFriendsDataStatus = LoadingFriendsDataStatus.loaded;
         }
       });
@@ -51,7 +51,7 @@ class _UserSearchState extends State<UserSearch> {
         loadingFriendsDataStatus == LoadingFriendsDataStatus.loading
             ? const Text("Loading")
             : (loadingFriendsDataStatus == LoadingFriendsDataStatus.loaded
-                ? UserProfile(user: friend)
+                ? UserProfile(user: returnedUserProfile)
                 : const Text("No data"))
       ],
     ));
