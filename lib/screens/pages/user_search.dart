@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:roam_mate/widgets/user_search/user_profile.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -50,7 +51,7 @@ class _UserSearchState extends State<UserSearch> {
         loadingFriendsDataStatus == LoadingFriendsDataStatus.loading
             ? const Text("Loading")
             : (loadingFriendsDataStatus == LoadingFriendsDataStatus.loaded
-                ? const Text("Loaded")
+                ? UserProfile(user: friend)
                 : const Text("No data"))
       ],
     ));
