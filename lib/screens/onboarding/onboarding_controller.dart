@@ -6,14 +6,14 @@ import 'package:roam_mate/screens/onboarding/onboarding_page.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-class App extends StatefulWidget {
-  const App({super.key});
+class OnboardingController extends StatefulWidget {
+  const OnboardingController({super.key});
 
   @override
-  State<App> createState() => _AppState();
+  State<OnboardingController> createState() => _OnboardingControllerState();
 }
 
-class _AppState extends State<App> {
+class _OnboardingControllerState extends State<OnboardingController> {
   late bool completedOnboarding;
   bool loadingOnboardingStatusData = true;
 
