@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:roam_mate/screens/onboarding/completed_onboarding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:roam_mate/screens/onboarding/onboarding_page.dart';
+import 'package:roam_mate/screens/pages/app.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -54,7 +55,7 @@ class _OnboardingControllerState extends State<OnboardingController> {
     }
 
     if (completedOnboarding == true) {
-      return const CompletedOnboarding();
+      return const App();
     }
 
     return OnboardingPage(toggleCompletedOnboarding: toggleCompletedOnboarding);
