@@ -11,10 +11,6 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // uncomment the line below when using authentication and firestore emulator locally
-  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-  // FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-
   runApp(const MyApp());
 }
 
@@ -43,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var loggedIn = (FirebaseAuth.instance.currentUser == null);
+  var loggedIn = (FirebaseAuth.instance.currentUser != null);
 
   @override
   void initState() {
