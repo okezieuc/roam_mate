@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:roam_mate/screens/pages/friend_request_list.dart';
 import 'package:roam_mate/screens/pages/user_search.dart';
 
 class App extends StatelessWidget {
@@ -13,7 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const UserSearch(),
+        const FriendRequestList(),
         TextButton(
             onPressed: () {
               signOut();
