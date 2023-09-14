@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:roam_mate/utils/friend_request_controller.dart';
 import 'package:roam_mate/utils/profile_controller.dart';
+import 'package:roam_mate/widgets/friend_request_list/request_list_user_profile.dart';
 
 class FriendRequestList extends StatefulWidget {
   const FriendRequestList({super.key});
@@ -14,7 +15,7 @@ class _FriendRequestListState extends State<FriendRequestList> {
   LoadingFriendRequestDataStatus loadingFriendRequestDataStatus =
       LoadingFriendRequestDataStatus.loading;
 
-  late List<Profile> friendRequestList;
+  List<Profile> friendRequestList = [];
 
   @override
   void initState() {
@@ -52,7 +53,13 @@ class _FriendRequestListState extends State<FriendRequestList> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Friend request list');
+    return Column(
+      children: [
+        const Text('Friend request list'),
+        for (var userProfile in friendRequestList)
+          RequestListUserProfile(user: userProfile)
+      ],
+    );
   }
 }
 
