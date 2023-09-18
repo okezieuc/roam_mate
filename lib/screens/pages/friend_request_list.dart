@@ -35,19 +35,21 @@ class _FriendRequestListState extends State<FriendRequestList> {
         usernamesOfFriendRequestSenders.add(friendRequest.data().requestedBy);
       }
 
-      // fetch the profile information of every user that sent a friend request
-      profileController
-          .where("userId", whereIn: usernamesOfFriendRequestSenders)
-          .get()
-          .then((profilesQuerySnapshot) {
-        for (var profile in profilesQuerySnapshot.docs) {
-          friendRequestSenders.add(profile.data());
-        }
+      if (usernamesOfFriendRequestSenders.isNotEmpty) {
+        // fetch the profile information of every user that sent a friend request
+        profileController
+            .where("userId", whereIn: usernamesOfFriendRequestSenders)
+            .get()
+            .then((profilesQuerySnapshot) {
+          for (var profile in profilesQuerySnapshot.docs) {
+            friendRequestSenders.add(profile.data());
+          }
 
-        setState(() {
-          friendRequestList = friendRequestSenders;
+          setState(() {
+            friendRequestList = friendRequestSenders;
+          });
         });
-      });
+      }
     });
   }
 

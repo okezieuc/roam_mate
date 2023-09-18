@@ -38,7 +38,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               (error, stackTrace) => print("Error writing document: $error"));
 
       // create a friendships entry for a user on sign up
-      friendshipsController.doc(currentUser.uid).set(Friendships(friends: []));
+      friendshipsController
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(Friendships(friends: []))
+          .onError(
+              (error, stackTrace) => print("Error writing document: $error"));
 
       widget.toggleCompletedOnboarding();
     } else {
