@@ -51,13 +51,27 @@ class _OnboardingControllerState extends State<OnboardingController> {
   @override
   Widget build(BuildContext context) {
     if (loadingOnboardingStatusData == true) {
-      return const CircularProgressIndicator();
+      return wrapInScaffold(const CircularProgressIndicator());
     }
 
     if (completedOnboarding == true) {
       return const App();
     }
 
-    return OnboardingPage(toggleCompletedOnboarding: toggleCompletedOnboarding);
+    return wrapInScaffold(
+        OnboardingPage(toggleCompletedOnboarding: toggleCompletedOnboarding));
   }
+}
+
+Widget wrapInScaffold(Widget innerWidget) {
+  return Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          innerWidget,
+        ],
+      ),
+    ),
+  );
 }
