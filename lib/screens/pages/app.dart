@@ -59,17 +59,20 @@ class _AppState extends State<App> {
         ],
       ),
       body: SafeArea(
-        child: <Widget>[
-          const UserSearch(),
-          Center(
-            child: TextButton(
-                onPressed: () {
-                  signOut();
-                },
-                child: const Text("Sign out")),
-          ),
-          const FriendRequestList(),
-        ][currentPageIndex],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: <Widget>[
+            const UserSearch(),
+            Center(
+              child: TextButton(
+                  onPressed: () {
+                    signOut();
+                  },
+                  child: const Text("Sign out")),
+            ),
+            const FriendRequestList(),
+          ][currentPageIndex],
+        ),
       ),
     );
   }
