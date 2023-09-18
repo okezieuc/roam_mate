@@ -26,7 +26,7 @@ class _UserSearchState extends State<UserSearch> {
     profileController
         .where("username",
             isEqualTo:
-                "janedoe") // replace "janedoe" with data from an input source
+                "bob") // replace "janedoe" with data from an input source
         .limit(1)
         .get()
         .then((querySnapshot) {

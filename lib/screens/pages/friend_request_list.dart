@@ -16,12 +16,16 @@ class _FriendRequestListState extends State<FriendRequestList> {
       LoadingFriendRequestDataStatus.loading;
 
   List<Profile> friendRequestList = [];
+  Map<String, String> requestMap = {};
 
   @override
   void initState() {
     super.initState();
 
     List<Profile> friendRequestSenders = [];
+
+    // variable that we can use to find the requestId of a user's request
+    Map<String, String> requestMapAccumulator = {};
 
     // load the list of all non-responded friend requests sent to this user
     friendRequestController
@@ -33,6 +37,10 @@ class _FriendRequestListState extends State<FriendRequestList> {
 
       for (var friendRequest in friendRequestsQuerySnapshot.docs) {
         usernamesOfFriendRequestSenders.add(friendRequest.data().requestedBy);
+
+        // store the request id of the request made by the current user
+        requestMapAccumulator[friendRequest.data().requestedBy] =
+            friendRequest.id;
       }
 
       if (usernamesOfFriendRequestSenders.isNotEmpty) {
@@ -47,6 +55,7 @@ class _FriendRequestListState extends State<FriendRequestList> {
 
           setState(() {
             friendRequestList = friendRequestSenders;
+            requestMap = requestMapAccumulator;
           });
         });
       }
@@ -59,7 +68,10 @@ class _FriendRequestListState extends State<FriendRequestList> {
       children: [
         const Text('Friend request list'),
         for (var userProfile in friendRequestList)
-          RequestListUserProfile(user: userProfile)
+          RequestListUserProfile(
+            user: userProfile,
+            friendRequestId: requestMap[userProfile.userId]!,
+          )
       ],
     );
   }
