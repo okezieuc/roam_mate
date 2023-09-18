@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:roam_mate/utils/controllers/friendships_controller.dart';
+import 'package:roam_mate/utils/controllers/profile_controller.dart';
+import 'package:roam_mate/utils/current_user.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -24,16 +27,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
     User? currentAuthUser = FirebaseAuth.instance.currentUser;
 
     if (currentAuthUser != null) {
-      final userData = <String, String>{
-        "userid": FirebaseAuth.instance.currentUser!.uid,
-        "username": _usernameController.text,
-        "display_name": _displayNameController.text,
-      };
-
-      db
-          .collection("users")
+      profileController
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(userData)
+          .set(Profile(
+            userId: FirebaseAuth.instance.currentUser!.uid,
+            username: _usernameController.text,
+            displayName: _displayNameController.text,
+          ))
+          .onError(
+              (error, stackTrace) => print("Error writing document: $error"));
+
+      // create a friendships entry for a user on sign up
+      friendshipsController
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(Friendships(friends: []))
           .onError(
               (error, stackTrace) => print("Error writing document: $error"));
 

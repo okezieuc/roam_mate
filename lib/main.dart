@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:roam_mate/screens/app.dart';
+import 'package:roam_mate/screens/onboarding/onboarding_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
@@ -69,7 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            loggedIn ? const App() : const AuthenticationPage(),
+            loggedIn
+                ? const OnboardingController()
+                : const AuthenticationPage(),
           ],
         ),
       ),
