@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:roam_mate/utils/controllers/friendships_controller.dart';
 import 'package:roam_mate/utils/controllers/profile_controller.dart';
-import 'package:roam_mate/utils/current_user.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
