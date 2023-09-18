@@ -20,6 +20,21 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: const Text(
+            'Roammate',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: false,
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  signOut();
+                },
+                child: const Text("Sign out")),
+          ]),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -43,17 +58,19 @@ class _AppState extends State<App> {
               label: 'Invitations'),
         ],
       ),
-      body: <Widget>[
-        const UserSearch(),
-        Center(
-          child: TextButton(
-              onPressed: () {
-                signOut();
-              },
-              child: const Text("Sign out")),
-        ),
-        const FriendRequestList(),
-      ][currentPageIndex],
+      body: SafeArea(
+        child: <Widget>[
+          const UserSearch(),
+          Center(
+            child: TextButton(
+                onPressed: () {
+                  signOut();
+                },
+                child: const Text("Sign out")),
+          ),
+          const FriendRequestList(),
+        ][currentPageIndex],
+      ),
     );
   }
 }
