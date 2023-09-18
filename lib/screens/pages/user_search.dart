@@ -14,19 +14,26 @@ class UserSearch extends StatefulWidget {
 
 class _UserSearchState extends State<UserSearch> {
   LoadingFriendsDataStatus loadingFriendsDataStatus =
-      LoadingFriendsDataStatus.loading;
+      LoadingFriendsDataStatus.noData;
 
   late Profile returnedUserProfile;
 
+  final _usernameController = TextEditingController();
+
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
+
+  void searchUserByUsername() {
+    setState(() {
+      loadingFriendsDataStatus = LoadingFriendsDataStatus.loading;
+    });
 
     // load the data for the selected user
     profileController
-        .where("username",
-            isEqualTo:
-                "bob") // replace "janedoe" with data from an input source
+        .where("username", isEqualTo: _usernameController.text)
         .limit(1)
         .get()
         .then((querySnapshot) {
@@ -47,6 +54,27 @@ class _UserSearchState extends State<UserSearch> {
     return Center(
         child: Column(
       children: [
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  fillColor: Theme.of(context).colorScheme.onInverseSurface,
+                  filled: true,
+                  labelText: 'Search',
+                ),
+              ),
+            ),
+            const SizedBox(width: 8.0),
+            IconButton.filled(
+                onPressed: () {
+                  searchUserByUsername();
+                },
+                icon: const Icon(Icons.search)),
+          ],
+        ),
         const Text("User Data"),
         loadingFriendsDataStatus == LoadingFriendsDataStatus.loading
             ? const Text("Loading")
