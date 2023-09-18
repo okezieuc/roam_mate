@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:roam_mate/utils/profile_controller.dart';
+import 'package:roam_mate/utils/controllers/profile_controller.dart';
 
 class RequestListUserProfile extends StatefulWidget {
   const RequestListUserProfile({super.key, required this.user});

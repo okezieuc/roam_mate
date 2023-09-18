@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:roam_mate/utils/profile_controller.dart';
+import 'package:roam_mate/utils/controllers/profile_controller.dart';
 import 'package:roam_mate/widgets/user_search/user_profile.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;

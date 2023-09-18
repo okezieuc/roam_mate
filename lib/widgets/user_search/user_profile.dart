@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:roam_mate/utils/friend_request_controller.dart';
-import 'package:roam_mate/utils/profile_controller.dart';
+import 'package:roam_mate/utils/controllers/friend_request_controller.dart';
+import 'package:roam_mate/utils/controllers/profile_controller.dart';
 import 'package:roam_mate/utils/show_snackbar.dart';
 
 class UserProfile extends StatefulWidget {
