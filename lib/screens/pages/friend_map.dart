@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:roam_mate/utils/controllers/user_locations_controller.dart';
 import 'package:roam_mate/utils/determine_position.dart';
+import 'package:roam_mate/utils/show_snackbar.dart';
 
 class FriendMap extends StatefulWidget {
   const FriendMap({super.key});
@@ -23,7 +25,15 @@ class _FriendMapState extends State<FriendMap> {
           TextButton(
               onPressed: () async {
                 Position location = await determinePosition();
-                print(location);
+
+                userLocationsController
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .set(UserLocation(
+                        longitude: location.longitude,
+                        latitude: location.latitude));
+
+                if (!context.mounted) return;
+                showSnackBar(context, "Updated your location on Firebase");
               },
               child: const Text("Update my location")),
           TextButton(
