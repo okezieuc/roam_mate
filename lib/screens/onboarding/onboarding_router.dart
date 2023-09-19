@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:roam_mate/screens/onboarding/completed_onboarding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:roam_mate/screens/onboarding/onboarding_page.dart';
 import 'package:roam_mate/screens/pages/app.dart';
@@ -51,13 +50,27 @@ class _OnboardingControllerState extends State<OnboardingController> {
   @override
   Widget build(BuildContext context) {
     if (loadingOnboardingStatusData == true) {
-      return const CircularProgressIndicator();
+      return wrapInScaffold(const CircularProgressIndicator());
     }
 
     if (completedOnboarding == true) {
       return const App();
     }
 
-    return OnboardingPage(toggleCompletedOnboarding: toggleCompletedOnboarding);
+    return wrapInScaffold(
+        OnboardingPage(toggleCompletedOnboarding: toggleCompletedOnboarding));
   }
+}
+
+Widget wrapInScaffold(Widget innerWidget) {
+  return Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          innerWidget,
+        ],
+      ),
+    ),
+  );
 }
