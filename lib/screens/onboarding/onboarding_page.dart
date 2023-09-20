@@ -47,7 +47,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       // create a user_locations entry for a user on sign up
       userLocationsController
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(UserLocation(longitude: -1, latitude: -1))
+          .set(UserLocation(
+              longitude: -1,
+              latitude: -1,
+              userId: FirebaseAuth.instance.currentUser!.uid))
           .onError(
               (error, stackTrace) => print("Error writing document: $error"));
 

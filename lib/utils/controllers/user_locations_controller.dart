@@ -8,14 +8,17 @@ final userLocationsController = FirebaseFirestore.instance
     );
 
 class UserLocation {
-  UserLocation({required this.longitude, required this.latitude});
+  UserLocation(
+      {required this.longitude, required this.latitude, required this.userId});
 
   UserLocation.fromJson(Map<String, Object?> json)
       : this(
           longitude: json['longitude']! as double,
           latitude: json['latitude']! as double,
+          userId: json['userId'] as String,
         );
 
+  final String userId;
   final double longitude;
   final double latitude;
 
@@ -23,6 +26,7 @@ class UserLocation {
     return {
       'longitude': longitude,
       'latitude': latitude,
+      'userId': userId,
     };
   }
 }
