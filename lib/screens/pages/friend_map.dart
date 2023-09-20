@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:roam_mate/utils/controllers/friendships_controller.dart';
+import 'package:roam_mate/utils/controllers/profile_controller.dart';
 import 'package:roam_mate/utils/controllers/user_locations_controller.dart';
 import 'package:roam_mate/utils/determine_position.dart';
 import 'package:roam_mate/utils/show_snackbar.dart';
@@ -15,6 +17,43 @@ class FriendMap extends StatefulWidget {
 class _FriendMapState extends State<FriendMap> {
   void signOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // fetch a list of the current user's friends from Firestore
+    List<String> currentUsersFriends = [];
+    friendshipsController
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then(
+      (doc) {
+        if (doc.data() != null) {
+          currentUsersFriends = doc.data()!.friends as List<String>;
+        } else {
+          print("error: current user's friends should not be null");
+          return;
+        }
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+
+    // get the profile data for each of the user's friends. store this in a map.
+    Map<String, Profile> friendsUserProfiles = {};
+    profileController
+        .where("userId", whereIn: currentUsersFriends)
+        .get()
+        .then((querySnapshot) {
+      for (var userProfile in querySnapshot.docs) {
+        friendsUserProfiles[userProfile.data().userId] = userProfile.data();
+      }
+    });
+
+    // get the location data for each of the user's friends. store this in a map
+
+    // update the state
   }
 
   @override
