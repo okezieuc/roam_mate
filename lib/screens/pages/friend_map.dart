@@ -6,7 +6,7 @@ import 'package:roam_mate/utils/controllers/profile_controller.dart';
 import 'package:roam_mate/utils/controllers/user_locations_controller.dart';
 import 'package:roam_mate/utils/determine_position.dart';
 import 'package:roam_mate/utils/show_snackbar.dart';
-import 'package:roam_mate/widgets/user_search/user_profile.dart';
+import 'package:roam_mate/widgets/friend_map/friend_location_list_item.dart';
 
 class FriendMap extends StatefulWidget {
   const FriendMap({super.key});
@@ -51,11 +51,11 @@ class _FriendMapState extends State<FriendMap> {
           friendsUserProfilesData[userProfile.data().userId] =
               userProfile.data();
         }
-      });
-    }).then((_) {
-      setState(() {
-        currentUsersFriends = currentUsersFriendsData;
-        friendsUserProfiles = friendsUserProfilesData;
+      }).then((_) {
+        setState(() {
+          currentUsersFriends = currentUsersFriendsData;
+          friendsUserProfiles = friendsUserProfilesData;
+        });
       });
     });
 
@@ -99,11 +99,11 @@ class _FriendMapState extends State<FriendMap> {
                 showSnackBar(context, "Updated your location on Firebase");
               },
               child: const Text("Update my location")),
-          TextButton(
-              onPressed: () {
-                signOut();
-              },
-              child: const Text("Sign out")),
+          for (var friend in currentUsersFriends)
+            FriendLocationListItem(
+              profile: friendsUserProfiles[friend]!,
+              userId: friend,
+            ),
         ],
       ),
     );
