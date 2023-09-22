@@ -65,5 +65,9 @@ service cloud.firestore {
             // a user's friends should be able to view their location
         		allow read: if request.auth != null  && (request.auth.uid in get(/databases/$(database)/documents/friendships/$(userId)).data.friends);
         }
+
+        match /nearby_friends/{userId} {
+          allow read: if request.auth.uid == userId;
+        }
     }
 }

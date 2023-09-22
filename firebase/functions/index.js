@@ -10,6 +10,14 @@ exports.createFriendshipsRecord = functions.auth.user().onCreate((user) => {
     return admin.firestore().collection("friendships").doc(user.uid).create({ friends: [] });
 })
 
+exports.createNearbyFriendsRecord = functions.auth.user().onCreate((user) => {
+    logger.log("Creating nearby_friends recrod for ", user.uid);
+    return admin.firestore().collection("nearby_friends").doc(user.uid).create({
+        user_ids: [],
+        friendLocations: {},
+    });
+})
+
 exports.addFriend = onCall((request) => {
     const requesterUserId = request.data.requesterUserId;
     const accepterUserId = request.auth.uid;
