@@ -1,45 +1,66 @@
 PODS:
   - cloud_firestore (4.9.1):
-    - Firebase/Firestore (= 10.12.0)
+    - Firebase/Firestore (= 10.15.0)
     - firebase_core
     - Flutter
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - Firebase/Auth (10.12.0):
-    - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.12.0)
-  - Firebase/CoreOnly (10.12.0):
-    - FirebaseCore (= 10.12.0)
-  - Firebase/Firestore (10.12.0):
-    - Firebase/CoreOnly
-    - FirebaseFirestore (~> 10.12.0)
-  - firebase_auth (4.9.0):
-    - Firebase/Auth (= 10.12.0)
+  - cloud_functions (4.4.1):
+    - Firebase/Functions (= 10.15.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.15.1):
-    - Firebase/CoreOnly (= 10.12.0)
+  - Firebase/Auth (10.15.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 10.15.0)
+  - Firebase/CoreOnly (10.15.0):
+    - FirebaseCore (= 10.15.0)
+  - Firebase/Firestore (10.15.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (~> 10.15.0)
+  - Firebase/Functions (10.15.0):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 10.15.0)
+  - firebase_auth (4.9.0):
+    - Firebase/Auth (= 10.15.0)
+    - firebase_core
     - Flutter
-  - FirebaseAppCheckInterop (10.14.0)
-  - FirebaseAuth (10.12.0):
+  - firebase_core (2.16.0):
+    - Firebase/CoreOnly (= 10.15.0)
+    - Flutter
+  - FirebaseAppCheckInterop (10.15.0)
+  - FirebaseAuth (10.15.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
-  - FirebaseCore (10.12.0):
+    - RecaptchaInterop (~> 100.0)
+  - FirebaseAuthInterop (10.15.0)
+  - FirebaseCore (10.15.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.14.0):
+  - FirebaseCoreExtension (10.15.0):
+    - FirebaseCore (~> 10.0)
+  - FirebaseCoreInternal (10.15.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseFirestore (10.12.0):
-    - FirebaseFirestore/AutodetectLeveldb (= 10.12.0)
-  - FirebaseFirestore/AutodetectLeveldb (10.12.0):
+  - FirebaseFirestore (10.15.0):
+    - FirebaseFirestore/AutodetectLeveldb (= 10.15.0)
+  - FirebaseFirestore/AutodetectLeveldb (10.15.0):
     - FirebaseFirestore/Base
     - FirebaseFirestore/WithLeveldb
-  - FirebaseFirestore/Base (10.12.0)
-  - FirebaseFirestore/WithLeveldb (10.12.0):
+  - FirebaseFirestore/Base (10.15.0)
+  - FirebaseFirestore/WithLeveldb (10.15.0):
     - FirebaseFirestore/Base
+  - FirebaseFunctions (10.15.0):
+    - FirebaseAppCheckInterop (~> 10.10)
+    - FirebaseAuthInterop (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseCoreExtension (~> 10.0)
+    - FirebaseMessagingInterop (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
+  - FirebaseMessagingInterop (10.15.0)
+  - FirebaseSharedSwift (10.15.0)
   - Flutter (1.0.0)
   - geolocator_apple (1.2.0):
     - Flutter
@@ -65,12 +86,14 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.3.1)
+  - RecaptchaInterop (100.0.0)
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `10.12.0`)
+  - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `10.15.0`)
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
 
@@ -79,23 +102,31 @@ SPEC REPOS:
     - Firebase
     - FirebaseAppCheckInterop
     - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
+    - FirebaseCoreExtension
     - FirebaseCoreInternal
+    - FirebaseFunctions
+    - FirebaseMessagingInterop
+    - FirebaseSharedSwift
     - GoogleUtilities
     - GTMSessionFetcher
     - nanopb
     - PromisesObjC
+    - RecaptchaInterop
 
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  cloud_functions:
+    :path: ".symlinks/plugins/cloud_functions/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
-    :tag: 10.12.0
+    :tag: 10.15.0
   Flutter:
     :path: Flutter
   geolocator_apple:
@@ -104,25 +135,32 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
-    :tag: 10.12.0
+    :tag: 10.15.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: 85d66b543b25130c45258412a39e851e230186e7
-  Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
-  firebase_auth: 097a2440d40bed75f4dfe4cb91b4d98349509b47
-  firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
-  FirebaseAppCheckInterop: c87f1d5421c852413dd936b2b2340b21e62501a0
-  FirebaseAuth: a66c1e14ec58f41d154a4b41ce1a23ea00ad4805
-  FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
-  FirebaseCoreInternal: d558159ee6cc4b823c2296ecc193de9f6d9a5bb3
-  FirebaseFirestore: 5d42819d1b219bc20e91c0cc854ed562680f31da
+  cloud_firestore: 46d2e46bc92e77ba5ab00151cba61e3b27e0ddd5
+  cloud_functions: 8e2371f08e3b37340cfbeb6745cc776300eda065
+  Firebase: 66043bd4579e5b73811f96829c694c7af8d67435
+  firebase_auth: fe628f773ffc4ccaf4a3c0d6cb45e9aae90c94bd
+  firebase_core: 77172d0a9d8d19d07606e24406e4c2fc14d3265b
+  FirebaseAppCheckInterop: a8c555b1c2db1d9445e6c3a08a848167ddb7eb51
+  FirebaseAuth: a55ec5f7f8a5b1c2dd750235c1bb419bfb642445
+  FirebaseAuthInterop: b566e21e2bc5e44a4d44babc56d05a7e5c10493b
+  FirebaseCore: 2cec518b43635f96afe7ac3a9c513e47558abd2e
+  FirebaseCoreExtension: d3f1ea3725fb41f56e8fbfb29eeaff54e7ffb8f6
+  FirebaseCoreInternal: 2f4bee5ed00301b5e56da0849268797a2dd31fb4
+  FirebaseFirestore: 9a14eef134fd586d8200f4dfa0ee3cb093a05d8f
+  FirebaseFunctions: e5a95bdd33077eefc3232381d24495ae66d3b1a7
+  FirebaseMessagingInterop: 83f7b1a363bfe30ec8bbff1aa708d38e9d456373
+  FirebaseSharedSwift: 34b11d9e675e14ee55e160cb7645bba30a192d14
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
 
-PODFILE CHECKSUM: c909d28f73b719d83e06db5098d1b4534e84005b
+PODFILE CHECKSUM: 42bbd1fbae0de045a6dd685052860430a6cccf0f
 
 COCOAPODS: 1.12.1
