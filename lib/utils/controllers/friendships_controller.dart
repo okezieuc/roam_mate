@@ -9,10 +9,10 @@ final friendshipsController = FirebaseFirestore.instance
 class Friendships {
   Friendships({required this.friends});
 
-  final List<String> friends;
+  final List<dynamic> friends;
 
   Friendships.fromJson(Map<String, Object?> json)
-      : this(friends: json['friends']! as List<String>);
+      : this(friends: json['friends']! as List<dynamic>);
 
   Map<String, Object?> toJson() {
     return {
