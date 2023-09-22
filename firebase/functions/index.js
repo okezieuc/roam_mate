@@ -14,7 +14,6 @@ exports.createNearbyFriendsRecord = functions.auth.user().onCreate((user) => {
     logger.log("Creating nearby_friends recrod for ", user.uid);
     return admin.firestore().collection("nearby_friends").doc(user.uid).create({
         user_ids: [],
-        friendLocations: {},
     });
 })
 
