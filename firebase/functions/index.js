@@ -47,3 +47,47 @@ exports.addFriend = onCall((request) => {
     })
 })
 
+exports.updateLocation = onCall((request) => {
+    const { longitude, latitude } = request.data;
+
+    const batch = admin.firestore().batch();
+
+    // update the current user's userLocation
+    const currentUsersLocation = admin.firestore().collection("user_locations").doc(request.auth.uid);
+    batch.update(currentUsersLocation, {
+        longitude, latitude
+    });
+
+    // load the friend list of the current user
+    return admin.firestore().collection("friend_requests").doc(request.auth.uid).get().then((doc) => {
+
+        currentUsersFriends = doc.data().friends;
+
+        // get the location data for each of their friends
+        admin.firestore().collection("user_locations").where("userId", "in", currentUsersFriends).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                userLocation = doc.data();
+
+                // check if this friend is within 200 miles of the user
+
+
+                // if this friend is within 200 miles, add the friend to the current user's
+                // nearby_friends list
+
+
+                // also add the current user to the other user's nearby_friends list
+
+
+                // if this friend is not within 200 miles, remove the friend from the user user's
+                // nearby friends list if they used to be in the list.
+
+
+            });
+        })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+    });
+
+})
+
