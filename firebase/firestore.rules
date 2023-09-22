@@ -1,0 +1,69 @@
+rules_version = '2';
+
+//service cloud.firestore {
+  //match /databases/{database}/documents {
+//
+    // This rule allows anyone with your Firestore database reference to view, edit,
+    // and delete all data in your Firestore database. It is useful for getting
+    // started, but it is configured to expire after 30 days because it
+    // leaves your app open to attackers. At that time, all client
+    // requests to your Firestore database will be denied.
+    //
+    // Make sure to write security rules for your app before that time, or else
+    // all client requests to your Firestore database will be denied until you Update
+    // your rules
+    // match /{document=**} {
+    //  allow read, write: if request.time < timestamp.date(2023, 10, 12);
+    //}
+  //}
+//}
+
+service cloud.firestore {
+    match /databases/{database}/documents {
+        match /users/{userId} {
+            // Only a user should be able to write their user data
+            allow write, update, create: if request.auth != null && request.auth.uid == userId;
+
+            // Only logged in users should be able to read user data
+            allow read: if request.auth != null;
+            
+            // REMOVE THIS: Allow logged in users to view list of users
+            allow list: if request.auth != null;
+        }
+        
+        match /friend_requests/{friendRequestId} {
+        		// STALE: allow any logged in user to do anything
+            // allow write, read, list, update, create: if request.auth != null;
+            
+            // only allow.a user to create a request if they are logged in.
+            // and a user should not be allowed to request a connection for others.
+            allow write, create: if request.auth != null && request.auth.uid == request.resource.data.requestedBy;
+            
+            // only allow a user to read, list, and update friend requests if it is relevant
+            // to them
+            allow read, list, update: if request.auth.uid == resource.data.isFor ||  request.auth.uid == resource.data.requestedBy;
+            
+        }
+        
+        match /friendships/{userId} {
+        		// STALE: allow any logged in user to do anything
+            // allow write, read, list, update, create: if request.auth != null;
+            
+            // a user should be able to do everything on their record
+            allow read, write, create, update: if request.auth.uid == userId;
+            
+            // a user should only be able to update another user's record if the
+            // user whose record is getting updated had earlier sent a friend request
+            // to them
+            allow update: if request.auth != null;
+        }
+        
+        match /user_locations/{userId} {
+        		// only a user should have access to do anything to their data except delete
+            allow read, write, update, create: if request.auth.uid == userId;
+            
+            // a user's friends should be able to view their location
+        		allow read: if request.auth != null  && (request.auth.uid in get(/databases/$(database)/documents/friendships/$(userId)).data.friends);
+        }
+    }
+}
