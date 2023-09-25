@@ -88,8 +88,7 @@ exports.updateLocation = onCall((request) => {
                 // check if this friend is within 200 miles of the user
                 pairDistance = distance(latitude, userLocation.latitude, longitude, userLocation.longitude);
 
-                // switch back to <= 200
-                if (pairDistance >= 200) {
+                if (pairDistance <= 200) {
                     // if this friend is within 200 miles, add the friend to the current user's
                     // nearby_friends list
 
