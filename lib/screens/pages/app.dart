@@ -24,9 +24,7 @@ class _AppState extends State<App> {
       appBar: AppBar(
           title: const Text(
             'Roammate',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: false,
           actions: <Widget>[

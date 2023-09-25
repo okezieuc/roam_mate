@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:roam_mate/utils/controllers/friend_request_controller.dart';
 import 'package:roam_mate/utils/controllers/profile_controller.dart';
 import 'package:roam_mate/widgets/friend_request_list/request_list_user_profile.dart';
@@ -65,8 +65,14 @@ class _FriendRequestListState extends State<FriendRequestList> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Friend request list'),
+        const Text(
+          'My Friend Requests',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black87),
+        ),
+        const SizedBox(height: 24),
         for (var userProfile in friendRequestList)
           RequestListUserProfile(
             user: userProfile,

@@ -22,7 +22,7 @@ class _RequestListUserProfileState extends State<RequestListUserProfile> {
       "requesterUserId": widget.user.userId,
       "friendRequestId": widget.friendRequestId,
     }).then((res) {
-      showSnackBar(context, 'Friend Request Accepted');
+      showSnackBar(context, '${widget.user.displayName} is now a friend.');
       setState(() {
         acceptedFriendRequest = true;
       });
@@ -31,22 +31,43 @@ class _RequestListUserProfileState extends State<RequestListUserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Name: ${widget.user.displayName}'),
-        Text('Username: ${widget.user.username}'),
-        acceptedFriendRequest
-            ? TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.check_box_outlined),
-                label: const Text("Accepted"))
-            : TextButton.icon(
-                onPressed: () {
-                  addFriend();
-                },
-                icon: const Icon(Icons.add),
-                label: const Text("Accept Request"))
-      ],
+    if (acceptedFriendRequest == true) {
+      return const SizedBox();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        children: [
+          Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Text(widget.user.displayName),
+                  subtitle: Text("@${widget.user.username}"),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    acceptedFriendRequest
+                        ? TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.check_box_outlined),
+                            label: const Text("Accepted"))
+                        : TextButton.icon(
+                            onPressed: () {
+                              addFriend();
+                            },
+                            icon: const Icon(Icons.person_add),
+                            label: const Text("Accept Request")),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

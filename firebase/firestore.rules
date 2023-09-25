@@ -37,7 +37,7 @@ service cloud.firestore {
             
             // only allow.a user to create a request if they are logged in.
             // and a user should not be allowed to request a connection for others.
-            allow write, create: if request.auth != null && request.auth.uid == request.resource.data.requestedBy;
+            allow write, create: if request.auth != null && request.auth.uid == request.resource.data.requestedBy && request.auth.uid != request.resource.data.isFor;
             
             // only allow a user to read, list, and update friend requests if it is relevant
             // to them

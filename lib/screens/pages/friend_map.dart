@@ -50,6 +50,7 @@ class _FriendMapState extends State<FriendMap> {
         }
       }).then(
         (value) {
+          if (!mounted) return;
           setState(() {
             // update our state afterward
             nearbyFriends = nearbyFriendsData['user_ids'];

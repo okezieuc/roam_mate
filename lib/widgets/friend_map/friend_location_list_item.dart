@@ -14,12 +14,33 @@ class FriendLocationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(profile.displayName),
-        Text("@${profile.username}"),
-        Text("${locationInfo['distance'].round()} miles away"),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Row(
+                children: [
+                  Text(
+                    profile.displayName,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    "@${profile.username}",
+                    style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                  ),
+                ],
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Text("${locationInfo['distance'].round()} miles away"),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
