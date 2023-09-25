@@ -38,10 +38,12 @@ class _UserProfileState extends State<UserProfile> {
           ),
           Text('@${widget.user.username}'),
           const SizedBox(height: 36),
-          FilledButton.icon(
-              onPressed: followUser,
-              icon: const Icon(Icons.person_add),
-              label: const Text("Follow")),
+          FirebaseAuth.instance.currentUser!.uid != widget.user.userId
+              ? FilledButton.icon(
+                  onPressed: followUser,
+                  icon: const Icon(Icons.person_add),
+                  label: const Text("Send Friend Request"))
+              : const SizedBox(),
         ],
       ),
     );
