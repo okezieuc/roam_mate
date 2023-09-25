@@ -17,6 +17,15 @@ exports.createNearbyFriendsRecord = functions.auth.user().onCreate((user) => {
     });
 })
 
+exports.createUserLocationsRecord = functions.auth.user().onCreate((user) => {
+    logger.log("Creating a user_locations record for ", user.uid);
+    return admin.firestore().collection("user_locations").doc(user.uid).create({
+        longitude: 179,
+        latitude: 179,
+        userId: user.uid,
+    })
+})
+
 exports.addFriend = onCall((request) => {
     const requesterUserId = request.data.requesterUserId;
     const accepterUserId = request.auth.uid;
@@ -46,6 +55,31 @@ exports.addFriend = onCall((request) => {
     })
 })
 
+exports.updateLocation = onCall((request) => {
+    logger.log("starting to update location");
+    const { longitude, latitude } = request.data;
+
+
+    const batch = admin.firestore().batch();
+
+    // update the current user's userLocation
+
+    // the problem with this code is that update fails when the thing that you are trying to udpate
+    // does not already exist. and it appears that we do not create a user_lications entry automatically
+    // for a user when they sign up.
+    const currentUsersLocation = admin.firestore().collection("user_locations").doc(request.auth.uid);
+    batch.update(currentUsersLocation, {
+        longitude, latitude
+    });
+
+
+    return batch.commit().then((_) => {
+        logger.log("location updated");
+        return { "result": "location updated", "successful": true };
+    })
+})
+
+/*
 exports.updateLocation = onCall((request) => {
     const { longitude, latitude } = request.data;
 
@@ -89,4 +123,4 @@ exports.updateLocation = onCall((request) => {
     });
 
 })
-
+*/
