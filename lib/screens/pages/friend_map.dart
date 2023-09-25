@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -87,12 +88,11 @@ class _FriendMapState extends State<FriendMap> {
           TextButton(
               onPressed: () async {
                 Position location = await determinePosition();
-
-                userLocationsController
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .update({
+                FirebaseFunctions.instance
+                    .httpsCallable('updateLocation')
+                    .call({
                   "longitude": location.longitude,
-                  "latitude": location.latitude
+                  "latitude": location.latitude,
                 });
 
                 if (!context.mounted) return;
