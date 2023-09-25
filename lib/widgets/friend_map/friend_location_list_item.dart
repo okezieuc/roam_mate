@@ -3,10 +3,14 @@ import 'package:roam_mate/utils/controllers/profile_controller.dart';
 
 class FriendLocationListItem extends StatelessWidget {
   const FriendLocationListItem(
-      {super.key, required this.profile, required this.userId});
+      {super.key,
+      required this.profile,
+      required this.userId,
+      required this.locationInfo});
 
   final String userId;
   final Profile profile;
+  final dynamic locationInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +18,7 @@ class FriendLocationListItem extends StatelessWidget {
       children: [
         Text(profile.displayName),
         Text("@${profile.username}"),
+        Text("${locationInfo['distance'].round()} miles away"),
       ],
     );
   }

@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:roam_mate/utils/controllers/friendships_controller.dart';
 import 'package:roam_mate/utils/controllers/profile_controller.dart';
-import 'package:roam_mate/utils/controllers/user_locations_controller.dart';
 import 'package:roam_mate/utils/determine_position.dart';
 import 'package:roam_mate/utils/show_snackbar.dart';
 import 'package:roam_mate/widgets/friend_map/friend_location_list_item.dart';
@@ -17,8 +16,9 @@ class FriendMap extends StatefulWidget {
 }
 
 class _FriendMapState extends State<FriendMap> {
-  List<dynamic> currentUsersFriends = [];
+  List<dynamic> nearbyFriends = [];
   Map<String, Profile> friendsUserProfiles = {};
+  Map<String, dynamic> nearbyFriendsLocationData = {};
 
   void signOut() {
     FirebaseAuth.instance.signOut();
@@ -28,56 +28,37 @@ class _FriendMapState extends State<FriendMap> {
   void initState() {
     super.initState();
 
-    // fetch a list of the current user's friends from Firestore
-    List<dynamic> currentUsersFriendsData = [];
     Map<String, Profile> friendsUserProfilesData = {};
-    Map<String, UserLocation> friendsUserLocationsData = {};
 
-    friendshipsController
+    // get data for all friends that are near the current user
+
+    FirebaseFirestore.instance
+        .collection("nearby_friends")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
-        .then(
-      (doc) {
-        currentUsersFriendsData = doc.data()!.friends;
-        return currentUsersFriendsData;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    ).then((_) {
-      // get the profile data for each of the user's friends. store this in a map.
+        .then((doc) {
+      final nearbyFriendsData = doc.data();
+
+      // loop over the friends and get the profile data for each user
       profileController
-          .where("userId", whereIn: currentUsersFriendsData)
+          .where("userId", whereIn: nearbyFriendsData!['user_ids'])
           .get()
           .then((querySnapshot) {
         for (var userProfile in querySnapshot.docs) {
           friendsUserProfilesData[userProfile.data().userId] =
               userProfile.data();
         }
-      }).then((_) {
-        setState(() {
-          currentUsersFriends = currentUsersFriendsData;
-          friendsUserProfiles = friendsUserProfilesData;
-        });
-      });
+      }).then(
+        (value) {
+          setState(() {
+            // update our state afterward
+            nearbyFriends = nearbyFriendsData['user_ids'];
+            friendsUserProfiles = friendsUserProfilesData;
+            nearbyFriendsLocationData = nearbyFriendsData;
+          });
+        },
+      );
     });
-
-    /*.then((_) {
-      print(currentUsersFriends);
-
-      // get the location data for each of the user's friends. store this in a map
-      userLocationsController
-          .where("userId", whereIn: currentUsersFriends)
-          .get()
-          .then((querySnapshot) {
-        for (var userLocation in querySnapshot.docs) {
-          friendsUserLocations[userLocation.data().userId] =
-              userLocation.data();
-        }
-
-        print(friendsUserLocations.toString());
-      });
-    });*/
-
-    // update the state
   }
 
   @override
@@ -99,10 +80,11 @@ class _FriendMapState extends State<FriendMap> {
                 showSnackBar(context, "Updated your location on Firebase");
               },
               child: const Text("Update my location")),
-          for (var friend in currentUsersFriends)
+          for (var friend in nearbyFriends)
             FriendLocationListItem(
               profile: friendsUserProfiles[friend]!,
               userId: friend,
+              locationInfo: nearbyFriendsLocationData[friend],
             ),
         ],
       ),
