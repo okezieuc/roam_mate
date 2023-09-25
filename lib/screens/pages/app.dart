@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:roam_mate/screens/pages/friend_map.dart';
 import 'package:roam_mate/screens/pages/friend_request_list.dart';
 import 'package:roam_mate/screens/pages/user_search.dart';
 
@@ -63,13 +64,7 @@ class _AppState extends State<App> {
           padding: const EdgeInsets.all(16.0),
           child: <Widget>[
             const UserSearch(),
-            Center(
-              child: TextButton(
-                  onPressed: () {
-                    signOut();
-                  },
-                  child: const Text("Sign out")),
-            ),
+            const FriendMap(),
             const FriendRequestList(),
           ][currentPageIndex],
         ),
