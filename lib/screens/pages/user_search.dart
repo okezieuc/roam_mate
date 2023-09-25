@@ -53,6 +53,7 @@ class _UserSearchState extends State<UserSearch> {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -75,7 +76,6 @@ class _UserSearchState extends State<UserSearch> {
                 icon: const Icon(Icons.search)),
           ],
         ),
-        const Text("User Data"),
         loadingFriendsDataStatus == LoadingFriendsDataStatus.loading
             ? const Text("Loading")
             : (loadingFriendsDataStatus == LoadingFriendsDataStatus.loaded

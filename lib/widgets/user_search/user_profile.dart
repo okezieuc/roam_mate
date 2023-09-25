@@ -26,15 +26,24 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Name: ${widget.user.displayName}'),
-        Text('Username: ${widget.user.username}'),
-        TextButton.icon(
-            onPressed: followUser,
-            icon: const Icon(Icons.person_add),
-            label: const Text("Follow"))
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.user.displayName,
+            textAlign: TextAlign.left,
+            style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+          ),
+          Text('@${widget.user.username}'),
+          const SizedBox(height: 36),
+          FilledButton.icon(
+              onPressed: followUser,
+              icon: const Icon(Icons.person_add),
+              label: const Text("Follow")),
+        ],
+      ),
     );
   }
 }
